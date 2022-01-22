@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+{% load static %}
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>Angajati</title>
+    <link rel="stylesheet" href="{%static "bootstrap/css/bootstrap.min.css"%}">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i">
+    <link rel="stylesheet" href="{%static "fonts/fontawesome-all.min.css"%}">
+    <link rel="stylesheet" href="{%static "fonts/font-awesome.min.css"%}">
+    <link rel="stylesheet" href="{%static "fonts/ionicons.min.css"%}">
+    <link rel="stylesheet" href="{%static "fonts/simple-line-icons.min.css"%}">
+    <link rel="stylesheet" href="{%static "fonts/fontawesome5-overrides.min.css"%}">
+</head>
+
+
+<body id="page-top">
+    <div id="wrapper">
+        <nav class="navbar navbar-dark align-items-start sidebar sidebar-dark accordion bg-gradient-primary p-0">
+            <div class="container-fluid d-flex flex-column p-0"><a class="navbar-brand d-flex justify-content-center align-items-center sidebar-brand m-0">
+                    <div class="sidebar-brand-icon rotate-n-15"><i class="fa fa-bank"></i></div>
+                    <div class="sidebar-brand-text mx-3"></div>
+                </a>
+                <hr class="sidebar-divider my-0">
+                <ul class="navbar-nav text-light" id="accordionSidebar">
+                    <li class="nav-item"><a class="nav-link" href="{% url 'index' %}" ><i class="fas fa-home"></i>Acasa</a></li>
+                    <li class="nav-item"><a class="nav-link" >Banci</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'banci' %}"><i class="fas fa-table"></i>Afisare</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'adaugareBanca' %}"><i class="fa fa-bank"></i><span>Adaugare</span></a></li>
+                    <li class="nav-item"><a class="nav-link" >Sucursale</a><a class="nav-link" href="{% url 'sucursale' %}"><i class="fas fa-table"></i><span>Afisare</span></a><a class="nav-link" href="{% url 'adaugareSucursala' %}"><i class="fa fa-building"></i><span>Adaugare</span></a></li>
+                    <li class="nav-item"><a class="nav-link" >Angajati</a><a class="nav-link" href="{% url 'angajati' %}"><i class="fas fa-table"></i><span>Afisare</span></a><a class="nav-link"href="{% url 'adaugareAngajat' %}"><i class="icon-user-follow"></i><span>Adaugare</span></a></li>
+                </ul>
+                <div class="text-center d-none d-md-inline"></div>
+            </div>
+        </nav>
+        <div class="d-flex flex-column" id="content-wrapper">
+            <div id="content">
+                <div class="container-fluid" style="text-align: center;">
+                    <h1 style="padding-top: 50px;">Angajati</h1>
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Banca</th>
+                                <th>Nume</th>
+                                <th>Prenume</th>
+                                <th>Adresa</th>
+                                <th>Functie</th>
+                                <th>Salariu</th>
+                                <th class="text-center">Editare</th>
+                                <th class="text-center">Stergere</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {%for angajat in angajati%}
+                              <tr>
+                             <td class="col">{{angajat.banca}}</td>
+                            <td class="col">{{angajat.nume}}</td>
+                                <td class="col">{{angajat.prenume}}</td>
+                            <td class="col">{{angajat.adresa}}</td>
+                             <td class="col">{{angajat.functie}}</td>
+                                <td class="col">{{angajat.salariu}}</td>
+                            <td class="col text-center"><button class="btn btn-info" onclick = "window.location.href='{% url 'editareAngajat' angajat.id%}'">Editeaza</button></td>
+                              <form action="{% url 'stergereAngajat' angajat.id %}" method="post">
+                                   {% csrf_token %}
+                                   {{ form }}
+                            <td class="col text-center"><button class="btn btn-danger" onclick = "window.location.href='{% url 'stergereAngajat'  angajat.id%}'" type="submit">Sterge</button></td>
+                              </form>
+                              </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div><a class="border rounded d-inline scroll-to-top" href="#page-top"><i class="fas fa-angle-up"></i></a>
+    </div>
+    </div>
+</body>
+
+</html>
